@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UserDataTransfer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="320" Width="525">
+        Title="MainWindow" Height="355" Width="525">
     <Grid>
         <TextBox x:Name="tbSourceSQLUsername" HorizontalAlignment="Left" Height="23" Margin="179,67,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="328"/>
         <TextBox x:Name="tbSourceSQLServerLocation" HorizontalAlignment="Left" Height="23" Margin="179,11,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="328"/>
@@ -23,6 +23,7 @@
         <Label x:Name="label_Copy4" Content="Target SQL Database" HorizontalAlignment="Left" Margin="10,201,0,0" VerticalAlignment="Top"/>
         <Label x:Name="label_Copy5" Content="Target SQL Username" HorizontalAlignment="Left" Margin="10,229,0,0" VerticalAlignment="Top"/>
         <Label x:Name="label_Copy6" Content="Target SQL Password" HorizontalAlignment="Left" Margin="10,257,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="button" Content="Begin" HorizontalAlignment="Left" Margin="432,285,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
 
     </Grid>
 </Window>

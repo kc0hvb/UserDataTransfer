@@ -20,9 +20,25 @@ namespace UserDataTransfer
     /// </summary>
     public partial class MainWindow : Window
     {
+        MainProgram MaPro = new MainProgram();
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            string sSourceSQLLocation = tbSourceSQLServerLocation.Text.ToString();
+            string sSourceSQLDatbase = tbSourceSQLServerDatabase.Text.ToString();
+            string sSourceSQLUsername = tbSourceSQLUsername.Text.ToString();
+            string sSourceSQLPassword = tbSourceSQLPassword.Text.ToString();
+            string sDestinationSQLLocation = tbTargetSQLServerLocation.Text.ToString();
+            string sDestinationSQLDatabase = tbTargetSQLDatabase.Text.ToString();
+            string sDestinationSQLUsername = tbTargetSQLUsername.Text.ToString();
+            string sDestinationSQLPassword = tbTargetSQLPassword.Text.ToString();
+            string sConnSource = "";
+            string sConnTarget = "";
+            MaPro.RunMainProgram(sConnSource, sConnTarget);
         }
     }
 }
