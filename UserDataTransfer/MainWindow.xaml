@@ -5,8 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UserDataTransfer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="320" Width="525">
     <Grid>
-        
+        <TextBox x:Name="tbSourceSQLUsername" HorizontalAlignment="Left" Height="23" Margin="179,67,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="328"/>
+        <TextBox x:Name="tbSourceSQLServerLocation" HorizontalAlignment="Left" Height="23" Margin="179,11,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="328"/>
+        <TextBox x:Name="tbSourceSQLServerDatabase" HorizontalAlignment="Left" Height="23" Margin="179,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="328"/>
+        <TextBox x:Name="tbSourceSQLPassword" HorizontalAlignment="Left" Height="23" Margin="179,95,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="328"/>
+        <TextBox x:Name="tbTargetSQLServerLocation" HorizontalAlignment="Left" Height="23" Margin="179,173,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="328"/>
+        <TextBox x:Name="tbTargetSQLDatabase" HorizontalAlignment="Left" Height="23" Margin="179,201,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="328"/>
+        <TextBox x:Name="tbTargetSQLUsername" HorizontalAlignment="Left" Height="23" Margin="179,229,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="328"/>
+        <TextBox x:Name="tbTargetSQLPassword" HorizontalAlignment="Left" Height="23" Margin="179,257,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="328"/>
+        <Label x:Name="label" Content="Source SQL Location" HorizontalAlignment="Left" Margin="10,11,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label_Copy" Content="Source SQL Database" HorizontalAlignment="Left" Margin="10,39,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label_Copy1" Content="Source SQL Username" HorizontalAlignment="Left" Margin="10,67,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label_Copy2" Content="Source SQL Password" HorizontalAlignment="Left" Margin="10,95,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label_Copy3" Content="Target SQL Location" HorizontalAlignment="Left" Margin="10,173,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label_Copy4" Content="Target SQL Database" HorizontalAlignment="Left" Margin="10,201,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label_Copy5" Content="Target SQL Username" HorizontalAlignment="Left" Margin="10,229,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label_Copy6" Content="Target SQL Password" HorizontalAlignment="Left" Margin="10,257,0,0" VerticalAlignment="Top"/>
+
     </Grid>
 </Window>
