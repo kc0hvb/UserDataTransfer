@@ -31,13 +31,13 @@ namespace UserDataTransfer
             string sSourceSQLLocation = tbSourceSQLServerLocation.Text.ToString();
             string sSourceSQLDatbase = tbSourceSQLServerDatabase.Text.ToString();
             string sSourceSQLUsername = tbSourceSQLUsername.Text.ToString();
-            string sSourceSQLPassword = tbSourceSQLPassword.Text.ToString();
+            string sSourceSQLPassword = pbSourceSQLPassword.Password.ToString();
             string sDestinationSQLLocation = tbTargetSQLServerLocation.Text.ToString();
             string sDestinationSQLDatabase = tbTargetSQLDatabase.Text.ToString();
             string sDestinationSQLUsername = tbTargetSQLUsername.Text.ToString();
-            string sDestinationSQLPassword = tbTargetSQLPassword.Text.ToString();
-            string sConnSource = "";
-            string sConnTarget = "";
+            string sDestinationSQLPassword = pbTargetSQLPassword.Password.ToString();
+            string sConnSource = $"Server = {sSourceSQLLocation}; Database = {sSourceSQLDatbase}; User Id = {sSourceSQLUsername}; Password = {sSourceSQLPassword};";
+            string sConnTarget = $"Server = {sDestinationSQLLocation}; Database = {sDestinationSQLDatabase}; User Id = {sDestinationSQLUsername}; Password = {sDestinationSQLPassword};";
             MaPro.RunMainProgram(sConnSource, sConnTarget);
         }
     }
