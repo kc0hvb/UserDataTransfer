@@ -2,6 +2,7 @@
 using System.IO;
 using System.Data;
 using System.Data.SqlClient;
+using System.Configuration;
 using System.Data.Sql;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,30 @@ namespace UserDataTransfer
     {
         private DataTable dDataTableSource = new DataTable();
         private DataTable dDataTableTarget = new DataTable();
+
+        public Dictionary<string, string> PullValuesFromConfig()
+        {
+            try
+            {
+                Dictionary<string, string> dValuesFromConfig = new Dictionary<string, string>();
+                string appPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+                string configFile = Path.Combine(appPath, "UserDataTransfer.exe.config");
+                ExeConfigurationFileMap configFileMap = new ExeConfigurationFileMap();
+                configFileMap.ExeConfigFilename = configFile;
+                Configuration config = ConfigurationManager.OpenMappedExeConfiguration(configFileMap, ConfigurationUserLevel.None);
+
+                dValuesFromConfig.Add("sSourceSQLDatbase", config.AppSettings.Settings["sSourceSQLDatbase"].Value);
+                dValuesFromConfig.Add("sSourceSQLLocation", config.AppSettings.Settings["sSourceSQLLocation"].Value);
+                dValuesFromConfig.Add("sSourceSQLUsername", config.AppSettings.Settings["sSourceSQLUsername"].Value);
+                dValuesFromConfig.Add("sDestinationSQLDatabase", config.AppSettings.Settings["sDestinationSQLDatabase"].Value);
+                dValuesFromConfig.Add("sDestinationSQLLocation", config.AppSettings.Settings["sDestinationSQLLocation"].Value);
+                dValuesFromConfig.Add("sDestinationSQLUsername", config.AppSettings.Settings["sDestinationSQLUsername"].Value);
+                return dValuesFromConfig;
+            }
+            catch
+            { return null; }
+        }
+        
         public void RunMainProgram(string pConnStringSource, string pConnStringTarget)
         {
             dDataTableSource = PullData(pConnStringSource);
@@ -35,14 +60,5 @@ namespace UserDataTransfer
             conn.Close();
             return datatable;
         }
-        public void SavingInformationInConfig()
-        {
-            string appPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            string configFile = Path.Combine(appPath, "Conan Exiles Server Admin.exe.config");
-            ExeConfigurationFileMap configFileMap = new ExeConfigurationFileMap();
-            configFileMap.ExeConfigFilename = configFile;
-            Configuration config = ConfigurationManager.OpenMappedExeConfiguration(configFileMap, ConfigurationUserLevel.None);
-        }
-
     }
 }
