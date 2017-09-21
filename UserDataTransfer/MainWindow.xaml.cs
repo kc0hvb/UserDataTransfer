@@ -27,14 +27,8 @@ namespace UserDataTransfer
         MainProgram MaPro = new MainProgram();
         public MainWindow()
         {
-            Dictionary<string, string> dictionary = MaPro.PullValuesFromConfig();
-            if (dictionary["sSourceSQLDatbase"] != "") tbSourceSQLServerDatabase.Text = dictionary["sSourceSQLDatbase"].ToString();
-            if (dictionary["sSourceSQLLocation"] != "") tbSourceSQLServerLocation.Text = dictionary["sSourceSQLLocation"].ToString();
-            if (dictionary["sSourceSQLUsername"] != "") tbSourceSQLUsername.Text = dictionary["sSourceSQLUsername"].ToString();
-            if (dictionary["sDestinationSQLDatabase"] != "") tbTargetSQLDatabase.Text = dictionary["sDestinationSQLDatabase"].ToString();
-            if (dictionary["sDestinationSQLLocation"] != "") tbTargetSQLServerLocation.Text = dictionary["sDestinationSQLLocation"].ToString();
-            if (dictionary["sDestinationSQLUsername"] != "") tbTargetSQLUsername.Text = dictionary["sDestinationSQLUsername"].ToString();
             InitializeComponent();
+            settingValues();
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
@@ -54,13 +48,30 @@ namespace UserDataTransfer
             //MaPro.RunMainProgram(sConnSource, sConnTarget);
         }
 
+        
+        private void settingValues()
+        {
+            try
+            {
+                Configuration config = MaPro.ConfigLocation();
+                tbSourceSQLServerDatabase.Text = config.AppSettings.Settings["sSourceSQLDatbase"].Value;
+                tbSourceSQLServerLocation.Text = config.AppSettings.Settings["sSourceSQLLocation"].Value;
+                tbSourceSQLUsername.Text = config.AppSettings.Settings["sSourceSQLUsername"].Value;
+                tbTargetSQLDatabase.Text = config.AppSettings.Settings["sDestinationSQLDatabase"].Value;
+                tbTargetSQLServerLocation.Text = config.AppSettings.Settings["sDestinationSQLLocation"].Value;
+                tbTargetSQLUsername.Text = config.AppSettings.Settings["sDestinationSQLUsername"].Value;
+                if (config.AppSettings.Settings["sSourceSQLPassword"].Value != "") pbSourceSQLPassword.Password = MaPro.Decrypt(config.AppSettings.Settings["sSourceSQLPassword"].Value);
+                if (config.AppSettings.Settings["sDestinationSQLPassword"].Value != "") pbTargetSQLPassword.Password = MaPro.Decrypt(config.AppSettings.Settings["sDestinationSQLPassword"].Value);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
         public void SavingInformationInConfig()
         {
-            string appPath = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            string configFile = System.IO.Path.Combine(appPath, "UserDataTransfer.exe.config");
-            ExeConfigurationFileMap configFileMap = new ExeConfigurationFileMap();
-            configFileMap.ExeConfigFilename = configFile;
-            Configuration config = ConfigurationManager.OpenMappedExeConfiguration(configFileMap, ConfigurationUserLevel.None);
+            Configuration config = MaPro.ConfigLocation();
 
             if (tbSourceSQLServerDatabase.Text != "") config.AppSettings.Settings["sSourceSQLDatbase"].Value = tbSourceSQLServerDatabase.Text.ToString();
             if (tbSourceSQLServerLocation.Text != "") config.AppSettings.Settings["sSourceSQLLocation"].Value = tbSourceSQLServerLocation.Text.ToString();
@@ -68,6 +79,8 @@ namespace UserDataTransfer
             if (tbTargetSQLDatabase.Text != "") config.AppSettings.Settings["sDestinationSQLDatabase"].Value = tbTargetSQLDatabase.Text.ToString();
             if (tbTargetSQLServerLocation.Text != "") config.AppSettings.Settings["sDestinationSQLLocation"].Value = tbTargetSQLServerLocation.Text.ToString();
             if (tbTargetSQLUsername.Text != "") config.AppSettings.Settings["sDestinationSQLUsername"].Value = tbTargetSQLUsername.Text.ToString();
+            if (pbSourceSQLPassword.Password != "") config.AppSettings.Settings["sSourcePassword"].Value = MaPro.Encrypt(pbSourceSQLPassword.Password.ToString());
+            if (pbTargetSQLPassword.Password != "") config.AppSettings.Settings["sDestinationSQLPassword"].Value = MaPro.Encrypt(pbTargetSQLPassword.Password.ToString());
             config.Save();
         }
 
