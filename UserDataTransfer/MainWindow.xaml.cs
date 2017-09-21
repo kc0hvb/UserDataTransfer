@@ -79,8 +79,10 @@ namespace UserDataTransfer
             if (tbTargetSQLDatabase.Text != "") config.AppSettings.Settings["sDestinationSQLDatabase"].Value = tbTargetSQLDatabase.Text.ToString();
             if (tbTargetSQLServerLocation.Text != "") config.AppSettings.Settings["sDestinationSQLLocation"].Value = tbTargetSQLServerLocation.Text.ToString();
             if (tbTargetSQLUsername.Text != "") config.AppSettings.Settings["sDestinationSQLUsername"].Value = tbTargetSQLUsername.Text.ToString();
-            if (pbSourceSQLPassword.Password != "") config.AppSettings.Settings["sSourcePassword"].Value = MaPro.Encrypt(pbSourceSQLPassword.Password.ToString());
-            if (pbTargetSQLPassword.Password != "") config.AppSettings.Settings["sDestinationSQLPassword"].Value = MaPro.Encrypt(pbTargetSQLPassword.Password.ToString());
+            if (pbSourceSQLPassword.Password != "")
+                config.AppSettings.Settings["sSourceSQLPassword"].Value = MaPro.Encrypt(pbSourceSQLPassword.Password.ToString());
+            if (pbTargetSQLPassword.Password != "")
+                config.AppSettings.Settings["sDestinationSQLPassword"].Value = MaPro.Encrypt(pbSourceSQLPassword.Password.ToString()); 
             config.Save();
         }
 
