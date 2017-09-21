@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UserDataTransfer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="355" Width="525">
+        Title="MainWindow" Height="355" Width="970.814">
     <Grid>
         <TextBox x:Name="tbSourceSQLUsername" HorizontalAlignment="Left" Height="23" Margin="179,67,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="328"/>
         <TextBox x:Name="tbSourceSQLServerLocation" HorizontalAlignment="Left" Height="23" Margin="179,11,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="328"/>
@@ -24,6 +24,7 @@
         <Button x:Name="button" Content="Begin" HorizontalAlignment="Left" Margin="432,285,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
         <PasswordBox x:Name="pbSourceSQLPassword" HorizontalAlignment="Left" Margin="179,95,0,0" VerticalAlignment="Top" Width="328" Height="26"/>
         <PasswordBox x:Name="pbTargetSQLPassword" HorizontalAlignment="Left" Margin="179,257,0,0" VerticalAlignment="Top" Width="328" Height="23"/>
+        <DataGrid x:Name="dataGrid" HorizontalAlignment="Left" Margin="512,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.525,0.492" Height="270" Width="441" SelectionChanged="dataGrid_SelectionChanged"/>
 
     </Grid>
 </Window>

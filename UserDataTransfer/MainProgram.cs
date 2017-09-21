@@ -21,29 +21,6 @@ namespace UserDataTransfer
         static readonly string SaltKey = "S@LT&KEY";
         static readonly string VIKey = "@1B2c3D4e5F6g7H8";
 
-        public Dictionary<string, string> PullValuesFromConfig()
-        {
-            try
-            {
-                Dictionary<string, string> dValuesFromConfig = new Dictionary<string, string>();
-                string appPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-                string configFile = Path.Combine(appPath, "UserDataTransfer.exe.config");
-                ExeConfigurationFileMap configFileMap = new ExeConfigurationFileMap();
-                configFileMap.ExeConfigFilename = configFile;
-                Configuration config = ConfigurationManager.OpenMappedExeConfiguration(configFileMap, ConfigurationUserLevel.None);
-
-                dValuesFromConfig.Add("sSourceSQLDatbase", config.AppSettings.Settings["sSourceSQLDatbase"].Value);
-                dValuesFromConfig.Add("sSourceSQLLocation", config.AppSettings.Settings["sSourceSQLLocation"].Value);
-                dValuesFromConfig.Add("sSourceSQLUsername", config.AppSettings.Settings["sSourceSQLUsername"].Value);
-                dValuesFromConfig.Add("sDestinationSQLDatabase", config.AppSettings.Settings["sDestinationSQLDatabase"].Value);
-                dValuesFromConfig.Add("sDestinationSQLLocation", config.AppSettings.Settings["sDestinationSQLLocation"].Value);
-                dValuesFromConfig.Add("sDestinationSQLUsername", config.AppSettings.Settings["sDestinationSQLUsername"].Value);
-                return dValuesFromConfig;
-            }
-            catch
-            { return null; }
-        }
-
         public string Encrypt(string plainText)
         {
             byte[] plainTextBytes = Encoding.UTF8.GetBytes(plainText);
@@ -103,13 +80,13 @@ namespace UserDataTransfer
         }
         public DataTable PullData(string pConnString)
         {
-            DataTable datatable = new DataTable();
-            string query = @"SELECT * FROM Users, Tabs, TabFields, Filters, FilterItems
+            string sQuery = @"SELECT * FROM Users, Tabs, TabFields, Filters, FilterItems
                              WHERE Users.User_ID = Tabs.User_ID AND Tabs.Tab_ID = TabFields.Tab_ID AND
                              Users.User_ID = Filters.User_ID AND Filters.Filter_ID = FilterItems.Filter_ID";
+            DataTable datatable = new DataTable();
 
             SqlConnection conn = new SqlConnection(pConnString);
-            SqlCommand cmd = new SqlCommand(query, conn);
+            SqlCommand cmd = new SqlCommand(sQuery, conn);
             conn.Open();
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             da.Fill(datatable);
