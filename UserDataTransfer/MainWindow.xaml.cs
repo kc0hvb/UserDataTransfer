@@ -16,6 +16,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Reflection;
 using System.Security.Cryptography;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace UserDataTransfer
 {
@@ -33,10 +35,10 @@ namespace UserDataTransfer
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            
-            
+            string sConnSource = GettingConnStrings("source");
+            string sConnTarget = GettingConnStrings("target");
             SavingInformationInConfig();
-            MaPro.RunMainProgram(sConnSource, sConnTarget);
+            //MaPro.RunMainProgram(sConnSource, sConnTarget);
         }
 
         
@@ -60,21 +62,28 @@ namespace UserDataTransfer
             }
         }
 
-        private string ConfigSettings(string pToFrom)
+        private string GettingConnStrings(string pToFrom)
         {
-            string sSourceSQLLocation = tbSourceSQLServerLocation.Text.ToString();
-            string sSourceSQLDatbase = tbSourceSQLServerDatabase.Text.ToString();
-            string sSourceSQLUsername = tbSourceSQLUsername.Text.ToString();
-            string sSourceSQLPassword = pbSourceSQLPassword.Password.ToString();
-            string sDestinationSQLLocation = tbTargetSQLServerLocation.Text.ToString();
-            string sDestinationSQLDatabase = tbTargetSQLDatabase.Text.ToString();
-            string sDestinationSQLUsername = tbTargetSQLUsername.Text.ToString();
-            string sDestinationSQLPassword = pbTargetSQLPassword.Password.ToString();
+            string sConn = "";
             if (pToFrom.Contains("source"))
             {
-                string sConnSource = $"Server = {sSourceSQLLocation}; Database = {sSourceSQLDatbase}; User Id = {sSourceSQLUsername}; Password = {sSourceSQLPassword};";
+                string sSourceSQLLocation = tbSourceSQLServerLocation.Text.ToString();
+                string sSourceSQLDatbase = tbSourceSQLServerDatabase.Text.ToString();
+                string sSourceSQLUsername = tbSourceSQLUsername.Text.ToString();
+                string sSourceSQLPassword = pbSourceSQLPassword.Password.ToString();
+                sConn = $"Server = {sSourceSQLLocation}; Database = {sSourceSQLDatbase}; User Id = {sSourceSQLUsername}; Password = {sSourceSQLPassword};";
+                return sConn;
             }
-            string sConnTarget = $"Server = {sDestinationSQLLocation}; Database = {sDestinationSQLDatabase}; User Id = {sDestinationSQLUsername}; Password = {sDestinationSQLPassword};";
+            else if (pToFrom.Contains("target"))
+            {
+                string sDestinationSQLLocation = tbTargetSQLServerLocation.Text.ToString();
+                string sDestinationSQLDatabase = tbTargetSQLDatabase.Text.ToString();
+                string sDestinationSQLUsername = tbTargetSQLUsername.Text.ToString();
+                string sDestinationSQLPassword = pbTargetSQLPassword.Password.ToString();
+                sConn = $"Server = {sDestinationSQLLocation}; Database = {sDestinationSQLDatabase}; User Id = {sDestinationSQLUsername}; Password = {sDestinationSQLPassword};";
+                return sConn;
+            }
+            else return sConn;
         }
 
         public void SavingInformationInConfig()
@@ -94,12 +103,9 @@ namespace UserDataTransfer
             config.Save();
         }
 
-        private string GenerateSaltedHash(string sInputString)
+        private void FillingDataGrid(string pConn)
         {
-            byte[] data = Encoding.ASCII.GetBytes(sInputString);
-            data = new SHA256Managed().ComputeHash(data);
-            String hash = Encoding.ASCII.GetString(data);
-            return hash;
+
         }
 
         private void dataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
