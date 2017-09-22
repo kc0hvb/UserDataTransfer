@@ -37,6 +37,7 @@ namespace UserDataTransfer
         {
             string sConnSource = GettingConnStrings("source");
             string sConnTarget = GettingConnStrings("target");
+            FillingDataGrid(sConnSource);
             SavingInformationInConfig();
             //MaPro.RunMainProgram(sConnSource, sConnTarget);
         }
@@ -105,7 +106,14 @@ namespace UserDataTransfer
 
         private void FillingDataGrid(string pConn)
         {
+            var select = "SELECT * FROM Users";
+            var c = new SqlConnection(pConn); // Your Connection String here
+            var dataAdapter = new SqlDataAdapter(select, c);
 
+            var commandBuilder = new SqlCommandBuilder(dataAdapter);
+            var ds = new DataSet();
+            dataAdapter.Fill(ds);
+            dgSource.DataContext = ds.Tables[0];
         }
 
         private void dataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
